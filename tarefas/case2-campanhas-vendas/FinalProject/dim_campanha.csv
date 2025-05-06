@@ -1,0 +1,5 @@
+ID_Campanha,Nome_Campanha,Tipo_Campanha,Data_Inicio,Data_Fim,Orcamento,Ativa
+0,Sem Campanha,Nenhuma,2022-01-01,2022-12-31,0,Não
+1,Volta às Aulas,Email,2023-08-01,2023-09-30,5000,Sim
+2,Natal 2023,Redes Sociais,2023-12-01,2023-12-31,8000,Sim
+3,Promoção Verão,Evento,2023-07-01,2023-08-31,3000,Não

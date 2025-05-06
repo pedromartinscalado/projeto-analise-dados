@@ -1,0 +1,264 @@
+check clients if they are duplicated in customers
+
+
+
+olist_customers
+
+Measure/
+Medida - AvaliacaoMediaClientes = AVERAGE('olist_order_reviews'[review_score])
+
+
+Medida -  DiferencaMediaEntregaEstimadavsReal (Dias) = 
+AVERAGEX(
+    FILTER(
+        'olist_orders',
+        NOT( ISBLANK( 'olist_orders'[order_delivered_customer_date] ) ) // Apenas pedidos entregues
+    ),
+    DATEDIFF(
+        'olist_orders'[order_delivered_customer_date], // Data Real de Entrega
+        'olist_orders'[order_estimated_delivery_date], // Data Estimada de Entrega
+        DAY
+    )
+)
+
+
+Número inteiro - Medida - NumeroTotalItensVendidos = COUNT('olist_order_items'[order_item_id])
+
+Número inteiro - Medida - NumeroVendedoresUnicos = (DISTINCTCOUNT('olist_sellers'[seller_id]))
+
+Coluna? ou Medida País = "Brazil" - Categoria de dados - Pais
+
+
+Número inteiro - Medida - 
+Pedidos Entregues = 
+CALCULATE(
+    [TotalPedidos], 
+    FILTER(
+        'olist_orders',
+        'olist_orders'[order_status] = "delivered"
+    )
+)
+
+
+Moeda - Portugues do Brasil - Medida - ReceitaTotalSemFrete = SUM(olist_order_items[price])
+
+Moeda - Portugues do Brasil - Medida - TicketMedioSemFrete = DIVIDE( [ReceitaTotalSemFrete], [TotalPedidos], 0 )
+
+
+customer_city
+customer_id
+customer_state
+customer_unique_id
+customer_zip_code_prefix
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+olist_geolocation
+
+geolocation_city - categoria de dados - Cidade
+geolocation_lat - categoria de dados - Latitude
+geolocation_lng - categoria de dados - Longitude
+geolocation_state - categoria de dados - 
+geolocation_zip_code_prefix - categoria de dados - Código Postal , Número Inteiro
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+
+olist_order_items
+
+freight_value - Resumo - Soma , Moeda - Portugues do Brasil
+order_id
+order_item_id - Resumo - Soma , Número Inteiro
+price - Resumo - Soma , Moeda - Portugues do Brasil
+product_id
+seller_id
+shipping_limit_date
+
+Medidas - Measures
+
+Moeda Portugues do Brasil - ReceitaTotalComFrete = SUM('olist_order_payments'[payment_value])
+
+
+
+Número inteiro - 
+TotalItensVendidos = COUNTROWS('olist_order_items')
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+
+olist_order_payments
+
+
+order_id
+payment_installments - Número inteiro - Resumo - Soma
+payment_sequential - Número inteiro - Resumo - Soma
+payment_type
+payment_value - Número decimal fixo , Moeda - Portugues do Brasil , Resumo -  Soma
+
+
+Medidas - Measures
+
+Moeda do Portugues do Brasil - DiferencaReceitaComSemFrete = [ReceitaTotalComFrete] - [ReceitaTotalSemFrete]
+
+
+Número inteiro - PedidosContadosPelosPagamentos = DISTINCTCOUNT('olist_order_payments'[order_id])
+
+
+Número inteiro - 
+TotalRegistosPagamento = COUNTROWS('olist_order_payments')
+
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+
+
+olist_order_reviews
+
+
+order_id
+review_answer_timestamp - Data/hora
+review_comment_message
+review_comment_title
+review_creation_date - Data/hora
+review_id
+review_score - Número inteiro , Resumo - Soma
+
+
+
+
+Medidas - Measures
+
+Número inteiro - 
+TotalReviews = COUNTROWS('olist_order_reviews')
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+olist_orders
+
+
+customer_id
+order_approved_at - Data/hora
+order_delivered_carrier_date - Data/hora
+order_delivered_customer_date - Data/hora
+order_estimated_delivery_date - Data/hora
+order_id
+order_purchase_timestamp - Data/hora
+order_status
+
+
+
+Medidas - Measures
+Geral - 
+TempoMedioEntrega (days) = 
+AVERAGEX(
+  FILTER(
+    'olist_orders',
+    NOT( ISBLANK( 'olist_orders'[order_delivered_customer_date] ) )
+  ),
+  DATEDIFF(
+    'olist_orders'[order_purchase_timestamp],
+    'olist_orders'[order_delivered_customer_date],
+    DAY
+  )
+)
+
+
+
+
+Geral - 
+TicketMedioComFrete = 
+DIVIDE( [ReceitaTotalComFrete], [TotalPedidos] )
+
+
+
+Número inteiro - 
+TotalPedidos = 
+DISTINCTCOUNT( 'olist_orders'[order_id] )
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+olist_products
+
+
+product_category_name
+product_description_lenght - Número inteiro para formato e tipo de dados - Resumo - Soma
+
+product_height_cm - Número inteiro para formato e tipo de dados - Resumo - Soma
+
+product_id
+
+product_length_cm -  Número inteiro para formato e tipo de dados - Resumo - Soma
+
+product_name_lenght - Número inteiro para formato e tipo de dados - Resumo - Soma
+
+product_photos_qty -  Número inteiro para formato e tipo de dados - Resumo - Soma
+
+product_weight_g -  Número inteiro para formato e tipo de dados - Resumo - Soma
+
+
+product_width_cm -  Número inteiro para formato e tipo de dados - Resumo - Soma
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+olist_sellers
+
+seller_city - Categoria de dados - Cidade
+seller_id
+seller_state
+seller_zip_code_prefix - Número inteiro, categoria de dados Código Postal
+
+
+Medidas - Measures
+
+Geral - ItensVendidosMediosPorVendedor = DIVIDE([TotalItensVendidos], [NumerodeVendedores], 0)
+
+
+
+Número inteiro - NumerodeVendedores = DISTINCTCOUNT('olist_sellers'[seller_id])
+
+
+
+Geral - PedidosMediosPorVendedor = DIVIDE([TotalPedidos], [NumerodeVendedores], 0)
+
+
+Moeda - Portugues do Brasil - 
+ReceitaMediaPorVendedor = DIVIDE([ReceitaTotalComFrete], [NumerodeVendedores], 0)
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+product_category_name_translation
+
+
+
+product_category_name
+product_category_name_english
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+new columns and measures
+ReceitaTotalComFrete = DIVIDE(SUM('olist_order_items'[ValorTotal]), DISTINCTCOUNT(olist_order_items[order_id]))

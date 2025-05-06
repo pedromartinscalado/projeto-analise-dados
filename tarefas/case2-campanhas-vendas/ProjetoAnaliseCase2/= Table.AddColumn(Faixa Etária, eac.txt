@@ -1,0 +1,44 @@
+= Table.AddColumn(#"Tipo Alterado", "Faixa Etária", each
+    if [Idade] >= 18 and [Idade] <= 25 then "18-25"
+    else if [Idade] >= 26 and [Idade] <= 35 then "26-35"
+    else if [Idade] >= 36 and [Idade] <= 45 then "36-45"
+    else if [Idade] >= 46 and [Idade] <= 55 then "46-55"
+    else if [Idade] >= 56 then "56+"
+    else null
+)
+
+Faixa Etária
+
+
+
+ROI 
+
+Medidas
+ROI = DIVIDE([ReceitaTotal], SUM(dim_campanha[Orcamento])) - tabela dim_campanha
+ReceitaTotal = SUMX(fato_vendas, fato_vendas[Quantidade] * RELATED(dim_produto[Preco_Unitario]))
+
+
+
+Total de venda
+
+
+Total investido 
+
+
+Receita sem campanha
+
+
+Receita com campanha
+
+
+
+Receita total 
+
+
+% de vendas influenciadas por campanha
+
+
+ROI por campanha
+
+
+Receita por tipo e nome de campanha

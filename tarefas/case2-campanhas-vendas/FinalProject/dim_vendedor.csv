@@ -1,0 +1,21 @@
+ID_Vendedor,Nome_Vendedor,Equipa,Regiao,Canal_Venda
+1,Vendedor 1,C,Norte,Loja Física
+2,Vendedor 2,A,Sul,Online
+3,Vendedor 3,A,Sul,Loja Física
+4,Vendedor 4,A,Centro,Online
+5,Vendedor 5,B,Sul,Online
+6,Vendedor 6,B,Norte,Loja Física
+7,Vendedor 7,A,Centro,Loja Física
+8,Vendedor 8,C,Norte,Online
+9,Vendedor 9,B,Norte,Online
+10,Vendedor 10,B,Centro,Online
+11,Vendedor 11,B,Norte,Loja Física
+12,Vendedor 12,A,Sul,Online
+13,Vendedor 13,A,Norte,Online
+14,Vendedor 14,A,Centro,Online
+15,Vendedor 15,A,Centro,Loja Física
+16,Vendedor 16,A,Centro,Online
+17,Vendedor 17,C,Norte,Online
+18,Vendedor 18,C,Centro,Loja Física
+19,Vendedor 19,A,Centro,Online
+20,Vendedor 20,B,Norte,Online
